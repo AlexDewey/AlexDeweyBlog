@@ -1,0 +1,248 @@
+::: center
+# Preliminary Work Into Sorting Complex Objects Through Large Action Vectors {#preliminary-work-into-sorting-complex-objects-through-large-action-vectors .unnumbered}
+:::
+
+::: center
+**Alex Dewey**\
+UC Davis\
+`amdewey@ucdavis.edu`
+:::
+
+::: center
+:::
+
+## 1 Introduction {#introduction .unnumbered}
+
+Imagine we have two tables. On each table we have two types of colored
+balls, either red or blue. For an agent to sort out which balls to put
+on each table becomes an interesting problem. Our first solution is that
+of a program that makes simple swaps. If the agent sees a blue ball on
+the designated red table, it swaps that ball onto the blue table, and
+tries to find a blue ball on the red table to swap with. This is a
+simple sorting algorithm that works, however we can make this task a
+little more challenging.
+
+Now let's add a constraint. Instead of red and blue balls, we have
+cards. A card consists of an inherent value, as well as additional
+values, given other cards are also on the same table. We've gone from
+simple balls to sorting complex pieces of data that instead give
+rewards. This can be seen in real life in the game of Teamfight Tactics,
+where champions from a bench must be selected to represent a strong team
+to fight against other teams. The reward function is then the strength
+of one team we construct against other possible teams we may be able to
+make. This is similar to sports, where a team of players must be chosen
+to go against another team, with some players remaining on the bench to
+be swapped in at any given time. Finding the best team to counter other
+teams is a nontrivial task, that in a game, may require the assessment
+of each permutation of a team to discover what is optimal.
+
+## 2 Theoretical Approach {#theoretical-approach .unnumbered}
+
+Our first instinct would normally be reinforcement learning, as we have
+a series of swaps that need to be made and a reward function to
+determine success. But let's examine the fundamentals of a reinforcement
+learning problem; the Bellman Equation.
+$$Q^\pi(s,a) = E[r+\gamma \max_{a'}Q^\pi(s',a')|s,a]$$ We can calculate
+the best policy given the current state $(s)$ and action $(a)$ pair by
+maximizing the $q$ function of the next state action pair $(Q^*(s',a'))$
+with respect to the action we take from our given state. This value is
+multiplied by $\gamma$ to indicate a decreasing importance for all
+future time steps, and we add the reward given by the state we choose.
+
+This is the standard equation that most deep reinforcement learning
+derives from, and serves as a basis for important sequential actions to
+be modeled. But what if we don't receive any intermediate reward? Then
+the equation wouldn't make as much sense. What if we then try to do all
+actions in a single feed forward step? This way we reduce the sequential
+nature of our operations into a single inference call, reducing the time
+of training and execution drastically. This can be done mostly because
+we don't have any new surprises, as all information is available to the
+agent, and there aren't any reward functions in the middle that may
+change the order in which we care about moving. We'd now have a variable
+vector of actions $\mathbf{\hat{a}} = <a_1, a_2, \ldots, a_n>$ of length
+$n$. $\mathbf{\hat{a}}$ represents a subset of all possible actions such
+that $\mathbf{\hat{a}} \subseteq \boldsymbol{A}$. At the last layer, all
+values in $\mathbf{\hat{a}}$ follow the piecewise function that
+determines if they're active or not.
+
+::: center
+$\forall a \in \boldsymbol{A},
+    f_{p}(a) = \begin{cases}
+        -1, & \text{if } a < 0 \\
+        1, & \text{if } a \geq 0
+    \end{cases}$
+:::
+
+The $Q$ function then becomes an objective function for the state-action
+pair.
+$$V^\pi(s) = E[\max_{\hat{a}}\sum\limits_{\substack{i=0}}^{n} r_{n}|s]$$
+
+This method now more closely resembles temporal difference learning,
+which too estimates the final reward through creating its own value
+function in between steps. We still outperform this method by not
+estimating each individual action, but rather a vector of actions.
+
+This new perspective of this subset of RL problems means that any
+problem that has no intermediate rewards in a perfect-knowledge
+environment can be reduced to a simpler classification-esc problem. We
+are essentially \"skipping to the answer\", and instead of making a
+series of smaller steps towards the answer we declare all actions that
+must be taken to reach the end state. This increases the complexity and
+dimensionality for any assignment of $\mathbf{\hat{a}}$, however, the
+amount of \"learning\" conducted on each step is improved in my model as
+each action possible is either taken or not taken, eliminating the need
+for an exploration exploitation hyperparameter.
+
+The best part about this \"skip to the end\" approach is that we can, if
+need be, call the function multiple times on the new sorted data. This
+can increase accuracy by viewing our series of actions as not the final
+solution, but as one large step. The number of sequential steps then to
+converge to an optimal answer is drastically reduced in situations where
+simulation steps are cheap, and inference steps in our ML algorithm are
+expensive. This will oftentimes be the case as the PCIe to communicate
+between CPUs and GPUs for training is a limiting factor, and sending
+over a batch of actions inside a single inference call is ideal for
+better performance.
+$$Q(s,\mathbf{\hat{a}}) = E[\sum\limits_{\substack{i=0}}^{n} r_{n}+\max_{\mathbf{\hat{a}}} Q(s',\mathbf{\hat{a}'})|s]$$
+
+As for the MLP model itself we have the following for $n$ layers:
+$$z_1 = f_1(W_1v_{\text{input}}+b_1)$$ $$z_2 = f_2(W_2z_1+b_2)$$
+$$\ldots$$ $$z_n-1 = f_n(W_nz_{n-2}+b_n-1)$$
+$$z_n = f_{p}(W_nz_{n-1}+b_n)$$ where $W$, $b$, and $f$ represent the
+weight matrix, bias vector, and activation function (ReLu) for the $n$th
+layer. The input for our use case in Teamfight Tactics has a 3,195 input
+vector and an 82 output vector corresponding to swapping two places of
+either the board or bench (9 each) and a pass action that passes their
+turn. An action being on or off is calculated by if the output
+perceptron is positive or negative as described by the piecewise
+function in the final layer referenced earlier.
+
+## 3 Optimizing Loss {#optimizing-loss .unnumbered}
+
+One last interesting detail to consider is that of the loss function.
+We're breaking down the Bellman Equation and changing it for more of a
+classification task, however our feedback is that of a reward. Our
+output represents that of the actions we took, and the consequential
+reward we get from the system. This creates an interesting tuple by
+which the loss function is centered around. If a loss function can be
+developed that can convert both inputs to a given output and
+backpropagate results properly, we'll have a working model.
+
+::: center
+                   **Low Confidence**   **High Confidence**
+  --------------- -------------------- ---------------------
+   **Low Loss**         Low Loss             Low Loss
+   **High Loss**       High Loss              No Loss
+:::
+
+The table above describes the relationship we wish to center a loss
+function around given our tuple of $\langle A, r \rangle$. As our $r$
+value increases, we want the $y$ value to decrease. For this, we use
+$-\tanh(r)$. This means for negative rewards, we have a loss closer to
+1, and for positive rewards we have a loss of -1. However, because we
+wish to bind this loss as a positive value, we use $-\tanh(r)+1$ such
+that all $y$ values remain positive.
+
+::: center
+:::
+
+The next variable we wish to capture is that of the confidence of the
+activation. The activation can be either negative or positive, so
+multiplying $|\mathbf{a}|(\tanh(r+s)+1)$ will give us a loss function
+using two values. The value $s$ is to shift our loss function left and
+right and is a hyperparameter. For a negative $r$ value, the more wrong
+we are the more punished we become as the graph is V-shaped. For a
+greatly positive $r$ value, the line becomes sufficiently flat.
+
+-   For incorrect answers, confident answers are punished.
+
+-   For correct answers, confidence is not punished.
+
+# 4 Experimental Method Results and Discussion {#experimental-method-results-and-discussion .unnumbered}
+
+This solution works, but averages out almost immediately. Compared to
+random sampling, the loss function is better by $\sim1.1$ with an
+average build score of 57. For comparison's sake, an optimized DQN
+averages a build score of 43.5. Using the long-to-calculate heuristic
+method, we get 61 as what we should be aiming to beat in future works.
+
+The DQN starts to fall off and fails to stand up to my method, however
+changes in the exploitation and exploration, and further tweaking can
+help boost results. However it is clear from the beginning that the
+potential for large action vectors to grow with better loss functions
+and other improvements listed below may be an area of interest to
+investigate. We can demonstrate our method does learn, but a lack of
+consistent improvement is worrying and shows that two main issues may be
+occurring.
+
+1.  **Too much output:** The output can learn from an example, but
+    neighboring examples, and the complexity of the output prohibit
+    improvement. For any output in a classification or reinforcement
+    learning algorithm, there is a clear singular value that is chosen
+    and assessed. A softmax is applied to a classification problem,
+    drastically limiting the number of outputs to 1 or 2 potential
+    matches, and in reinforcement learning, we only have one action per
+    network chosen. For an RL problem, this means that we cannot
+    accurately assess which value caused or didn't cause an increase in
+    reward to properly optimize. The output for optimization problems in
+    classification and RL is just one, however here we have $2^{81}$
+    possible combinations in $\boldsymbol{A}$ that all require specific
+    fine-tuning which isn't trivial.
+
+2.  **Negative experiences:** When no good moves are presented in an
+    environment, a DQN can still simply focus on predicting what values
+    give what results and isn't necessarily focused on making correct
+    moves. Our loss function and problem setup dictate that we have to
+    move towards correct values only, which cannot occur in an RL
+    problem. In an RL problem, it is crucial that all moves, even those
+    that are poor, are attempted to learn. In this model, there's no
+    incentive for new moves to be tested outside of the ones we expect
+    to give the best result. This is probably why we get results better
+    than random, but once we get even a slight improvement, we stop
+    progressing. A local minima is reached and the method doesn't learn
+    any further.
+
+# 5 Future Direction {#future-direction .unnumbered}
+
+1.  **Interesting Simpler Cases:** Unexpectedly, the DQN performs
+    incredibly well in smaller state spaces with easier problems to
+    tackle. The state space of Teamfight Tactics is too hard, however
+    sorting the numbers 1-5 in chronological order was incredibly easy.
+    This is only interesting as the inverse is true in that my large
+    action vector method does poorly in the small case but well in the
+    large case. This makes me think that my large action vector method
+    is good at finding high-value moves, rather than a correct listing
+    of good moves.
+
+2.  **Comparing Other Models:** I want to explore and understand what I
+    may borrow from temporal differencing and decision transformers.
+
+3.  **Reducing Actions:** Adding other rewards and punishments that
+    focus on removing clutter in the number of actions used may be an
+    interesting direction.
+
+4.  **Multiple Large Steps:** I didn't get to test in this paper how the
+    algorithm may improve given more iterative steps. The training only
+    looked at single cases. DQNs took as much time as they needed (up to
+    20 time steps) while the action vectors only used a single step.
+
+5.  **Loss Function Optimizations:** An issue with my loss function is
+    that for positive rewards there's a slight gradient preferring to go
+    towards zero. This may be one of the reasons why loss isn't
+    correctly contributing towards better results.
+
+# 6 Conclusion {#conclusion .unnumbered}
+
+In complex environments, finding the best answer will not be possible
+due to the computational limits of calculating and evaluating each
+permutation, so instead we use heuristics to come up with a slightly
+better than random answer to compare against. Considering that my method
+almost immediately finds a local minima that surpasses a costly
+heuristic calculation is promising. I would love to have reviewers
+examine my code and work and see what they think. It may be that I've
+made an error somewhere and I'm not to rule out my own weaknesses in
+experimental setup. This is ultimately an incomplete work.
+
+::: center
+I'd love to receive any feedback, thank you for reading!
+:::
