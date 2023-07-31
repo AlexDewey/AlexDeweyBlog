@@ -2,9 +2,6 @@
 title: "How We Got To ChatGPT"
 date: 2023-07-31
 ---
-
-# How We Got To ChatGPT #
-
 This blog describes all of my initial research into NLP, my summarization of each important contribution in the field, and a corresponding picture.
 This will be useful for anyone wanting to learn about how the fundamentals of modern technology like how chatGPT operates.
 
