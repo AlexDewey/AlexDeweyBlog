@@ -1,4 +1,3 @@
-
 ---
 title: "Simple Matrix Factorization Guide"
 date: 2023-08-01
