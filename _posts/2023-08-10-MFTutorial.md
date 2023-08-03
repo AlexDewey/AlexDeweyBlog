@@ -23,7 +23,7 @@ $$r_{ui} = x_{u}y_{i}^{T}$$
 
 The only problem is that these two smaller matrices X,Y that are multiplied together don't get a good estimation of the original matrix R as we simply put random variables in them to start off with.
 
-# picture goes here #
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MFTutorial/0_y2Xf39zRp77KnRqv.png)
 
 An optimization problem needs three things:
 <li>Values to correct</li> 
@@ -54,7 +54,7 @@ for k slice of X
 $$x_{u} = (\sum_{r_{ui}\in r_{u*}} y_{i}y_{i}^T+\lambda I_{k})^{-1}\sum_{r_{ui}\in r_{u*}}r_{ui}y{i} $$
 end for
 
-Now do the same for loop for Y.
+Now do the same for loop for Y. That's it! Do this until we converge, or stop gaining accuracy in our training set.
 
 <br><br>
 ### So what does the code look like? ###
@@ -130,3 +130,7 @@ def als_step(train_matrix, x, y, variable, k, lmbda):
         return y
 
 ```
+
+So to use more mathy terms after explaining this simply. We've created a latent space through the custom rank k that we've embedded all of the users and items into.
+
+Thank you for reading! Hopefully this was helpful, and at some point if it's worth investigating, I'll include Probabilistic Matrix Factorization on this blog too. 🙂
