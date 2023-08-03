@@ -49,13 +49,12 @@ Remember, x<sub>u</sub> is a 1xk vector in the X matrix.
 
 Initialize X, Y
 
-for k slice of X
-$$x_{u} = (\sum_{r_{ui}\in r_{u*}} y_{i}y_{i}^T+\lambda I_{k})^{-1}\sum_{r_{ui}\in r_{u*}}r_{ui}y{i} $$
+for k slice of X<br>
+$$x_{u} = (\sum_{r_{ui}\in r_{u*}} y_{i}y_{i}^T+\lambda I_{k})^{-1}\sum_{r_{ui}\in r_{u*}}r_{ui}y{i} $$ <br>
 end for
 
 Now do the same for loop for Y. That's it! Do this until we converge, or stop gaining accuracy in our training set.
 
-<br><br>
 ### So what does the code look like? ###
 There's a full repository <a href="https://github.com/AlexDewey/Matrix-Factorization-ALS/blob/main/main.py">here</a>.
 The only difference in the implementation is that A and B are substitute matrices that represent the following:
