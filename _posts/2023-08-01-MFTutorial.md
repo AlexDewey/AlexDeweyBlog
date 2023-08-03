@@ -1,7 +1,7 @@
 
 ---
 title: "Simple Matrix Factorization Guide"
-date: 2023-08-02
+date: 2023-08-01
 ---
 
 In trying to learn about ALS Matrix Factorization I realized there wasn't any easy intuitive explanation. So I made this one!
