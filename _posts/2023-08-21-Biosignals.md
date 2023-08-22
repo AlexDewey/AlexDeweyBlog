@@ -8,6 +8,8 @@ How do you deal with such a modality? What's tricky is that unlike other modalit
 With no formal training in how to deal with this topic, I went back and read the first seven chapters of "Biomedical Signal and Image Processing by Kayvan Najarian and Rover Splinter".
 These chapters that I'll cover the first five of momentarily discuss the basics required to proceed with research in the domain of biomedical signal processing.
 
+## Book Material ##
+
 ### Chapter 1: Signals and Processing ###
 
 The most we really get from here is an introduction. Stuff like how a signal is a 1-D ordered sequence of numbers. Nothing too tricky.
@@ -83,12 +85,42 @@ $$ W_{\psi ,X}(a,b) = \frac{1}{\sqrt{|a|}} \int_{-\inf}^{+\inf}x(t)\psi^{*}(\fra
 
 where a is the scaling parameter and b is the shifting parameter. Ψ(t) is the mother wavelet multiplied by our signal x(t). This integral can then give us the integral over the matching parts of the wavelet and signal, meaning the resulting value will be a value representing the likeness. Note that this is also normalized by the constant a.
 
-In wavelet decomposition, the input signal is convolved by two wavelets, a low-pass (scaling) wavelet and a high-pass (detail) wavelet. Scaling and detail basically refer to the absolute value and the relative change to achieve the next value; a way of decomposing a signal into two separate signals.
+This would then be the discrete wavelet transform:
 
-I need to know more here :(
+$$ W_{\psi, X}(a,b) = \frac{1}{\sqrt{|a|}} \sum_{i=0}^{N}x(t_{i})\psi^{*}(\frac{t_{i}-b}{a}), a\neq 0 $$
+
+In wavelet decomposition, the input signal is convolved by two wavelets, a low-pass (approximation) wavelet and a high-pass (detail) wavelet. The low pass portions are iteratively filtered again and again by a low and high pass filtering process.
+
+A signal's approximation is the inbetween values of two previous points. This results in half the number of points. The detail is then the difference between the two previous points. This way we have a transform of two types that work as a low pass and high pass filtering system.
+
+These signals are iteratively filtered to gather coefficients (the approximation and detail numbers that are calculated) in order to decompose a signal into more usable sections.
 
 The Daubechies (dbX) wavelets are a collection of waves starting from 1 and going to 20. They start off rough and long and slowly over time increase in frequency and smoothness.
 There are other mother wavelets, however a rule of thumb is the one we choose should match the complexity of the signal and the shape of the signal we wish to catch.
 
 Discrete wavelet transforms are used for denoising and compression of signals and images. The process for applying wavelets first starts with us having a low pass and high pass filter on the input signal. Then we apply the same two filters on the smaller low pass filter (each time this is called a bank).
 Wavelets are analyzed on the high pass filters for each bank.
+
+## MIT Course Additional Information ##
+
+Whenever I want to learn material, even for a class I have I'll refer to the best places I can find information. Generally Stanford, MIT and Berkeley put out content where the professor is 100% confident in what they're putting out. This may not be the case in other institutions where a student can oftentimes gamble with the teaching ability and/or knowledge of the professor. Here are a few notes I took from the MIT course that the book did not cover.
+
+The only material that I didn't see covered in the book that was in the MIT course was that of some digital filtering techniques.
+
+A finite impulse response (FIR) is the reaction to a sudden and instant impulse (change). This oftentimes is measuring noise, so FIR filters remove said impulses.
+Filtering that goes on longer can be referred to as IIR filters (infinite impulse response filters). This is often due to feedback that decays over time.
+The use casese for both filters here are more nuanced than what I'm letting on, but if processing raw signal data is proivng difficult due to sudden jolts or movements causing unwanted noise, these are a good option in one's toolbox to delve further into.
+
+## Research ##
+
+Now we're getting into the practical applications of various biosignals in health! Let's begin with modern research!
+
+(2015)[A new contrast based multimodal medical image fusion framework](https://www.sciencedirect.com/science/article/pii/S0925231215000466)
+
+This paper uses the non-subsampled contourlet transform (NSCT). The NSCT is a form of wavelet decomposition that takes into consideration 2D multi-scale and multi-direction information. The method decomposes the source medical images into low and high frequency bands in the NSCT domain. Differing fusion rules are then applied to the varied frequency bands of the transformed images.
+
+Low frequency bands are fused by considering phase congruency. Phase congruency compares the weighted alignment of fourier components of a signal with the sum of the fourier components. This captures the feature significance in images and is particularly good at edge detection.
+High frequency fuses on directive contrast. Directive contrast "collects all the informative textures from the source." As a result we get a desireable transform on medical images that preserve image details and improves image visual effets for the purpose of diagnosis.
+
+(2017)[An improved multimodal medical image fusion algorithm based on fuzzy transform](https://www.sciencedirect.com/science/article/pii/S1047320317302432)
+
