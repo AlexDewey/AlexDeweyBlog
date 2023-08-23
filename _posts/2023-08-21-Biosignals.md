@@ -65,7 +65,7 @@ Histogram equalization has all gray values equally related by filtering larger i
 
 Median filtering can be used to help eliminate drastic sources of noise in images.
 
-That's really it for this chapter. It's quite simple, as imaging techniques are simple and easy to understand in comparison to unidimensional biosignals.
+That's really it for this chapter. It's quite simple, as imaging techniques are simple and easy to understand in comparison to unidimensional biomedical signals.
 
 ### Chapter 4: Edge Detection and Segmentation of Images ###
 
@@ -113,14 +113,94 @@ The use casese for both filters here are more nuanced than what I'm letting on, 
 
 ## Research ##
 
-Now we're getting into the practical applications of various biosignals in health! Let's begin with modern research!
+Now we're getting into the practical applications of various biomedical signals in health! Let's begin with modern research!
 
-(2015)[A new contrast based multimodal medical image fusion framework](https://www.sciencedirect.com/science/article/pii/S0925231215000466)
+### (2015)[A new contrast based multimodal medical image fusion framework](https://www.sciencedirect.com/science/article/pii/S0925231215000466) ###
 
 This paper uses the non-subsampled contourlet transform (NSCT). The NSCT is a form of wavelet decomposition that takes into consideration 2D multi-scale and multi-direction information. The method decomposes the source medical images into low and high frequency bands in the NSCT domain. Differing fusion rules are then applied to the varied frequency bands of the transformed images.
 
 Low frequency bands are fused by considering phase congruency. Phase congruency compares the weighted alignment of fourier components of a signal with the sum of the fourier components. This captures the feature significance in images and is particularly good at edge detection.
 High frequency fuses on directive contrast. Directive contrast "collects all the informative textures from the source." As a result we get a desireable transform on medical images that preserve image details and improves image visual effets for the purpose of diagnosis.
 
-(2017)[An improved multimodal medical image fusion algorithm based on fuzzy transform](https://www.sciencedirect.com/science/article/pii/S1047320317302432)
+### (2018)[Deep Learning on 1-D Biosignals: a Taxonomy-based Survey](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6115218/) ###
 
+Surveys are great sources for understanding where a field is in terms of progress and where a research ought to focus their attention. The paper introduces the field of 1 dimensional biosignals describing biosignals as generally non-linear, non-stationary, dynamic and complex in nature. This means that creating hand-crafted features to test on is not reliable.
+
+The paper talks about how a common practice is that of using pretrained NNs, as small medical datasets aren't enough to effectively train many NNs.
+
+Issues often not considered in 1-D biosignals is that of how training and collecting data with specific medical devices will give different results to that of other similar devices. Either there's an issue with sampling rates, or preprocessed steps that modify the data in undesirable ways. Another issue discussed is that clinical significance can only really be gathered from multimodal analysis. Luckily I'll be doing a major post on that next!
+
+Most techniques brought up seem to fail in capturing meaningful data from biosignals due to their inability to handle the complexity of the data being dynamic and multivariate.
+
+Deep learning is the current candidate for deep learning data as it's able to handle the multimoda ldata required and is currently mostly limited by data aquisition issues, hence pretraining being so abundant.
+
+Lastly, Multi-lead CNNs and LSTM models are used for clustering tasks while autoencoders are used for signal enhancement and reconstruction tasks in general at this point. Note that this survey is in 2018, and developments do move fast, thought it's good to note trends and how specific algorithms benefit in various ways.
+
+### (2019)[A Hybrid DL Model for Human Activity Recognition Using Multimodal Body Sensing Data](https://ieeexplore.ieee.org/document/8786773) ###
+
+Given multimodal data for biosensors, this paper wants to predic twhat a person is doing (e.g standing still, bending knees, running, etc).
+
+SRUs, GRUs and LSTMs ar eproposed for handling the health data, though the authors drop the mention of LSTMs for an unknown reason. The SRUs just add both input and hidden state and do a tanh operation. That's it in case this was an unfamiliar architecture to anyone. They function as a simpler GRU and are shown in a diagram below.
+
+THe proposed solution "solves" this problem, achieving almost 100% accuracy. All it does is stack two SRUs followed by two GRUs together. The model takes in 23 inputs from the differing health channels collected.
+
+![Alt text](test.com)
+
+It is suspect that the results are so good, as nothing in this field comes close to this level of consistent performance. Maybe the training and testing data got mixed up somehow? Otherwise, the algorithm chosen is quite interesting and could be used for future signal processing purposes. It doesn't have much to do with our biomedical signal review, but this next paper leverages them wonderfully.
+
+### (2019)[Multi-method Fusion of Cross-Subject Emotion Recognition Based on High-Dimensional EEG Features](https://www.frontiersin.org/articles/10.3389/fncom.2019.00053/full) ###
+
+This paper focuses on determining the emotional state of a subject given feature extraction from EEGs. Before we get into that we have to discuss more review that wasn't discussed earlier.
+
+1. Hjorth Activity: The power spectrum.
+
+$$ Activity = var(y(t)) $$
+
+2. Hjorth Mobility: The mean frequency, proportion of standard deviation of the power spectrum.
+
+$$ Mobility = \sqrt{\frac{var(\frac{dy(t)}{dt}}{var(y(t)}} $$
+
+3. Hjorth Complexity: The chance in frequency.
+
+$$ Complexity = \frac{Mobility(\frac{dy(t)}{dt})}{Mobility(y(t))} $$
+
+4. Simple standard deviation.
+
+Before we can talk about sample entropy and wavelet entropy we need to understand entropy. Entropy is our surprise. When the event of an outcome is low we want a lot of surprise, whil ethe closer it is to 1 we want 0. The inverse log suits this perfectly. The entropy of a process can then be the average of the surprise for each outcome; entropy is the expected value of the surprise.
+
+If we have a loaded coin with the following table:
+
+|                   | Heads | Tails |
+| :---------------- | :------: | :----: |
+| Probability        |   0.9   | 0.1 |
+| Surprise: log(1/p(x) |   0.15   | 3.32 |
+
+The expected surprise (or entropy) is then:
+
+$$ =(0.9\cdot0.15)+(0.1\cdot3.32) = 0.47 $$
+
+$$ \sum xP(X=x) $$
+
+where x is the surprise, let's replace x with the probability of the event and simplify.
+
+$$ Entropy = -\sum p(x)log(p(x)) $$
+
+If we had a fair coin the entropy would be 1, while the smaller to 0 we get the more entropy exists.
+
+5. Sample Entropy: Calculates the unpredictability of waves by comparing wave signals to see how similar they are. It looks at two sets of simultaneous data points and compares their similarity in comparison the a slightly wider window.
+
+$$ SampleEn = -ln\frac{A}{B} $$
+
+A and B are the summations of logical comparisons between values in a sliding window. This means that similar values will be added up together. If there's a lot of similarities we'll get 0, but if there's no consistency in windows we'll get a higher value. The window size and what consitutes the same value within a specific threshold will change the sample entropy recorded.
+
+Another way to picture this is a flat line will result in the two windows recording the same number of similar points, resulting in 1 (the negative log of 1 is 0). In a less predictable signal we'll get a good approximation into the entropy as the larger window is drastically better than the slightly smaller one, ultimately causing more entropy to occur.
+
+6. Wavelet Entropy: Does wavelet decomposition and then computes an entropy measure on the coefficients.
+
+Next are four PSD frequency domain features:
+
+7. The power spectral density (PSD) is the fourier transform of the autocorrelation function of the wave. So if our signal is noise, correlation is zero, and our fourier transform is a flat line. The power spectral density is then a constant. However a square wave form produces an autocorrelation function of an iscosceles triangle around the origin. The corresponding PSD is then a sync squared function shape. Our PSD was then used on four preprocessed rhythms alpha, beta, gamma and theta.
+
+![Text Alt](test.com)
+
+In this diagram the final ST-SBSSVM method is a significance test (ST), sequential backwad selection (SBS) and a support vectorm machine (SVM). SBS is a significance test in which variables are eliminated until only the variables that are statistically significant relative to the SVM are left.
