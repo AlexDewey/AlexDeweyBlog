@@ -49,3 +49,47 @@ They use a sparse autoencoder (SAE) as their feature learning tool. Both BCC and
 
 Pooling is used toreduce dimnesionality of feature maps. The resulting feature map is combined with patient data for a softmax classifier resulting in a final classification.
 
+### (2018)[Prediction of rupture risk in anterior communicating artery aneurysms with feed-forward artificial neural network](https://pubmed.ncbi.nlm.nih.gov/29476219/)###
+
+Anterior communicating artery (ACOM) aneurysms are the most common intracranial aneurysms, we're looking to diagnose ruptured vs unruptured arteries. The dataset the authors had to work with has that of 594 ACOM aneurysms, 54 unruptured and 540 ruptured.
+
+![Alt text](test.com)
+
+When collecting data an issue I saw was the lack of computer vision for aneurysms. Instsead, the authors opted for hand-based measurments for each special part of the aneurysm. The problem being that any measurment has to be done by a professional who understands the structures which can differ drastically. THis means that a professional diagnossi would've most likely been more accurate and faster in the first place that using this algorithm.
+
+The inputs to a NN were then 17 parameters including the measurments and other values such as hypertension, smoking, age, etc.
+
+An adaptive synthetic approach was used for the unbalanced dataset. Imagine we only have two samples in a given dataset. SMOTE is a technique that'll make synthetic points on that line. ADASYN would then do the same, but move off the line slightly. Then just imagine how this expands for n dimensions and with many possible lines to choose from.
+
+The results were good; 95% accurate. I'm just more concerned with how useful the work truly is. This paper is interesting and if you're wondering "why even include this?" I had to ask myself more times than I would've liked with some other papers haha. I guess this is the best of what we're given because there aren't any objectively poor experiment design decisions unlike some other papers, this just suffers from practicality issues for me.
+
+### (2019)[Multimodal Machine Learning-based Knee Osteoarthritis Progression Prediction from Plain Radiographs and Clinical Data](https://www.nature.com/articles/s41598-019-56527-3)###
+
+The authors develop a Knee osteoarthritis (OA) multimodal ML-based progression prediction model utilizing radiograph data, examination results and the previous medical history of patients.
+
+![Alt text](test.com)
+
+A deep CNN looks at knee x-rays initially. The unclear usage of GradCAM is basically just highlighting the activations for a doctor to see where the CNN is looking to come to its conclusions. We get a final prediction of where the knee is in its deterioration as well as a prediction of where it'll go from the CNN. This embedding is then concatenated with other EHR data such as Age, Surgery information, and the optional radiographic assessment. This last assessment may do some heavy lifting in terms of the predictive power and I'm afraid it may skew results.
+
+Lastly a gradient boosting machine is then used to make our final classificaiton giving decent final results.
+
+### (2020)[Multimodal fusion with deep neural networks for leveraging CT imaging and electronic health record.](https://www.nature.com/articles/s41598-020-78888-w)###
+
+![Alt text](test.com)
+
+This paper is looking at how various multimodal model architectures are used to solve the diagnosis of pulmonary embolisms.
+
+Grid search was used to find optimal hyperparameters. The late elastic average model achieved the highest AUROC of 0.947, outperforming significantly. This makes sense as a single NN can interact with each feature of the same domain and then concatenate results. It would've been interesting to put a NN at the end as well (that may perform better) but the results are still good!
+
+Their late fusion model takes the averages of two separate models, meaning that even if there's a missing modality a prediction can still be made.
+
+### (2020)[Multimodal Brain Tumor Classification Using Deep Learning and Robust Feature Selection: A Machine Learning Application for Radiologists] ###
+
+This paper uses contrast stretching to stretch the minimum and maximum intensity values, as neurological imaging can often be hard to evaluate. Remember from my biomedical signal processing blog, a lot of the focus was on properly handling just this type of imaging.
+
+The images are fed into a pre-trained CNN VGG16 and VGG19 for feature extraction. The embedded vectors are then fed into an extreme learning machine (ELM). ELMs are structurally the same as neural networks but they do all of their optimization immediately and not iteratively using backpropagation. These are used for smaller datasets to get quick decent results that don't have the same level of generalization as a neural network.
+
+The features of the ELM are fed into a Partial Least Squares Regression classifier (PLS). To understand what this is we have to go from reviewing PCA, to PCR to then PLS.
+
+PCA (principal component analysis) finds the center of the data and then sets the cneter to the axis of the graph. It finds a line that fits the data the best
+
