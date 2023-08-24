@@ -26,7 +26,7 @@ Every wave complex can be made up of a group of sinusoidal waves oscillating at 
 This seems incredibly unintuitive on why we'd make this step, and I get that, but it'll work out nicely.
 What this does for us however is it means the center of mass is only really away from the middle of the circle when the frequency of the sign wave is the same, in which it forms a circle.
 
-![Alt text](https://test.com)
+![Alt text]([https://test.com](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/1-FT.png))
 
 The x-coordinate for center of mass can be added and subtracted to get good approximates of the original signal. The original signal is spun around this circle and then can be decomposed around unique frequencies that build up the original signal.
 Before we get to the actual FT let's build up the math.
@@ -63,9 +63,11 @@ Point processing is any simple transform in which it takes place on an independe
 Construct enhancement involves spreading the greyscale more evenly throughout the image to decrease the contrast.
 Histogram equalization has all gray values equally related by filtering larger instances of gray into neighboring buckets.
 
-![Alt text](https://test.com)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/2-Histogram-Equalization.png)
 
 Median filtering can be used to help eliminate drastic sources of noise in images.
+
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/3-Median-Filtering.png)
 
 That's really it for this chapter. It's quite simple, as imaging techniques are simple and easy to understand in comparison to unidimensional biomedical signals.
 
@@ -146,7 +148,7 @@ SRUs, GRUs and LSTMs are proposed for handling the health data, though the autho
 
 THe proposed solution "solves" this problem, achieving almost 100% accuracy. All it does is stack two SRUs followed by two GRUs together. The model takes in 23 inputs from the differing health channels collected.
 
-![Alt text](test.com)
+![Text Alt](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/4-Body-Sensing.png)
 
 It is suspect that the results are so good, as nothing in this field comes close to this level of consistent performance. Maybe the training and testing data got mixed up somehow? Otherwise, the algorithm chosen is quite interesting and could be used for future signal processing purposes. It doesn't have much to do with our biomedical signal review, but this next paper leverages them wonderfully.
 
@@ -219,7 +221,7 @@ Next are four PSD frequency domain features:
 
 7. The power spectral density (PSD) is the fourier transform of the autocorrelation function of the wave. So if our signal is noise, correlation is zero, and our fourier transform is a flat line. The power spectral density is then a constant. However a square wave form produces an autocorrelation function of an isosceles triangle around the origin. The corresponding PSD is then a sinc squared function shape. Our PSD was then used on four preprocessed rhythms alpha, beta, gamma and theta.
 
-![Text Alt](test.com)
+![Text Alt](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/5-Emotion.png)
 
 In this diagram the final ST-SBSSVM method is a significance test (ST), sequential backward selection (SBS) and a support vector machine (SVM). SBS is a significance test in which variables are eliminated until only the variables that are statistically significant relative to the SVM are left.
 
@@ -240,7 +242,7 @@ There have been three phases of reconstruction technology.
 
 ### (2021)[MLBF-Net: A Multi-Lead-Branch Fusion Network for Multi-Class Arrhythmia Classification Using 12-Lead ECG](https://www.google.com/url?q=https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7963211/&sa=D&source=docs&ust=1692839888377599&usg=AOvVaw2shIjnWfd3ez0oU4SbGts9) ###
 
-![Alt Text](test.com)
+![Alt Text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/6-Multi-class.png)
 
 We have 12 inputs from our ECG data. All are fed into individual convolution blocks; 5 blocks with a total of 15 convolutional layers all together. Next we feed our data into a bidirectional GRU (over the LSTM for less computational complexity). Our encoded BiGRU is fed into a "one-layer multilayer perceptron" and a softmax layer. The one-layer multilayer perceptron is a little bit of an oxymoron but I think it's just a single layer as the authors describe the layer as such:
 
@@ -248,17 +250,17 @@ $$ u_{jt} = tanh(W_{w}f_{BiGRU_{jt}}+b_{w}) $$
 
 All the values are concatenated and fed ito one last attention network.
 
-![Alt Text](test.com)
+![Alt Text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/7-Results.png)
 
 ### (2022)[A review on multimodal medical image fusion: Compendious analysis of medical modalities, multimodal databases, fusion techniques and quality metrics](https://www.sciencedirect.com/science/article/pii/S0010482522000452?casa_token=_LSOCzhO3gQAAAAA:fy6XN9v2kyZkuzchTv7gIrGwecbTmxxYfnoLuqHWK8kv5s0MdvRTFGGae0kz87bhoJZFyqlz9w#sec4)
 
 This is the last paper and is mostly for future work for if I need to pursue the topic of 2D data in the future. While this wasn't originally related to unidimensional biomedical data, a lot of the same techniques ultimately were used for the same when applied to 2D or even 3D images. I also found a lack of clarity in the use of the term fusion. Multimodal fusion can refer to different types of images rather than entirely different domains being fused as well. A lot of this research was conducted as an extension of my original focus on multimodal data techniques.
 
-![Alt Text](test.com)
+![Alt Text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/8-Weird-Fusion.png)
 
 Multimodal fusion in this case is in reference to only that of early fusion techniques. And these techniques are shown to be numerous and complex as shown in previous descriptions of techniques utilized.
 
-![Alt Text](test.com)
+![Alt Text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/9-Methods.png)
 
 The paper summarizes the following about this long list of techniques used in the field:
 
