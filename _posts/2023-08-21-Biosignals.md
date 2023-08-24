@@ -26,7 +26,7 @@ Every wave complex can be made up of a group of sinusoidal waves oscillating at 
 This seems incredibly unintuitive on why we'd make this step, and I get that, but it'll work out nicely.
 What this does for us however is it means the center of mass is only really away from the middle of the circle when the frequency of the sign wave is the same, in which it forms a circle.
 
-![Alt text]([https://test.com](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/1-FT.png))
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/SignalProcessing/1-FT.png)
 
 The x-coordinate for center of mass can be added and subtracted to get good approximates of the original signal. The original signal is spun around this circle and then can be decomposed around unique frequencies that build up the original signal.
 Before we get to the actual FT let's build up the math.
