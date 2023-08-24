@@ -5,7 +5,7 @@ date: 2023-08-24
 
 This blog post provides a recent exploration into multimodal models related to health. Especially in the case of diagnosis, we hardly ever rely on a single modality to inform our decisions, so we must rely on the multimodal nature of human beings to come up with a comprehensive view of what is going on. This won't mean that we truly use "everything" in every paper, as in feature selection only specific modalities can inform us of an outcome, or the authors simply didn't have enough data to dive deeper.
 
-### (2014) Fusion of multimodal medical images using Daubechies complex wavelet transform - A multiresolution approach ###
+### (2014)[Fusion of multimodal medical images using Daubechies complex wavelet transform - A multiresolution approach](https://www.sciencedirect.com/science/article/pii/S1566253512000887?ref=pdf_download&fr=RR-2&rr=7fbe362a7dfd32b8) ###
 
 This first paper makes more sense given my previous post of wavelets and processing biosignals. This is another paper focusing on the concatenation of MRI and CT scans of the brain. This then means we're dealing with an early fusion of medical images.
 
@@ -13,7 +13,7 @@ Wavelet transforms are a way of preprocessing and decomposing images into simple
 
 In the deep dives I do I try to cover good examples and give a breadth of information on what types of work is being done. This paper is mostly included to show that this field does exist and that these techniques are valid and give good results. They're considered "multimodal", but in my opinion doesn't fit the 
 
-### (2018)[Deep Learning Role in Early Diagnosis of Prostate Cancer](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5972199/)###
+### (2018)[Deep Learning Role in Early Diagnosis of Prostate Cancer](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5972199/) ###
 
 ![Alt text](https://github.com/AlexDewey/AlexDeweyBlog/blob/main/_posts/images/MultimodalResearch/1.png)
 
@@ -49,7 +49,7 @@ They use a sparse autoencoder (SAE) as their feature learning tool. Both BCC and
 
 Pooling is used to reduce dimensionality of feature maps. The resulting feature map is combined with patient data for a softmax classifier resulting in a final classification.
 
-### (2018)[Prediction of rupture risk in anterior communicating artery aneurysms with feed-forward artificial neural network](https://pubmed.ncbi.nlm.nih.gov/29476219/)###
+### (2018)[Prediction of rupture risk in anterior communicating artery aneurysms with feed-forward artificial neural network](https://pubmed.ncbi.nlm.nih.gov/29476219/) ###
 
 Anterior communicating artery (ACOM) aneurysms are the most common intracranial aneurysms, we're looking to diagnose ruptured vs unruptured arteries. The dataset the authors had to work with has that of 594 ACOM aneurysms, 54 unruptured and 540 ruptured.
 
@@ -63,7 +63,7 @@ An adaptive synthetic approach was used for the unbalanced dataset. Imagine we o
 
 The results were good; 95% accurate. I'm just more concerned with how useful the work truly is. This paper is interesting and if you're wondering "why even include this?" I had to ask myself more times than I would've liked with some other papers haha. I guess this is the best of what we're given because there aren't any objectively poor experiment design decisions unlike some other papers, this just suffers from practicality issues for me.
 
-### (2019)[Multimodal Machine Learning-based Knee Osteoarthritis Progression Prediction from Plain Radiographs and Clinical Data](https://www.nature.com/articles/s41598-019-56527-3)###
+### (2019)[Multimodal Machine Learning-based Knee Osteoarthritis Progression Prediction from Plain Radiographs and Clinical Data](https://www.nature.com/articles/s41598-019-56527-3) ###
 
 The authors develop a Knee osteoarthritis (OA) multimodal ML-based progression prediction model utilizing radiograph data, examination results and the previous medical history of patients.
 
@@ -73,7 +73,7 @@ A deep CNN looks at knee x-rays initially. The unclear usage of GradCAM is basic
 
 Lastly a gradient boosting machine is then used to make our final classification giving decent final results.
 
-### (2020)[Multimodal fusion with deep neural networks for leveraging CT imaging and electronic health record.](https://www.nature.com/articles/s41598-020-78888-w)###
+### (2020)[Multimodal fusion with deep neural networks for leveraging CT imaging and electronic health record.](https://www.nature.com/articles/s41598-020-78888-w) ###
 
 ![Alt text](https://github.com/AlexDewey/AlexDeweyBlog/blob/main/_posts/images/MultimodalResearch/8.png)
 
