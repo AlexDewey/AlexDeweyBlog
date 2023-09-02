@@ -5,9 +5,12 @@ date: 2023-09-02
 
 An interesting phenomenon in data is that of missing values. What's even more interesting are the ways missing values mean different things. They can be missing completely at random (MCAR), but more likely there is a cause for why that data doesn't exist. If we have other pieces of data that suggest why a value might be missing (missing at random: MAR), then not having a value is a value in itself that carries statistical significance. If the value is missing for a reason that only relies on the result and is outside of our control (missing not at random: MNAR), then we again have to take it into account in our statistical analysis.
 
-For example, say we're conducting a study on a hair growth serum. </br>
-**MCAR** would mean that a collection methodology might've broken, say the way we process data means every third person on hair growth serum gets their results deleted. </br>
-**MAR** would mean that there were people filling in surveys before the trial, and those who were displeased with the results stopped responding and dropped out of the trial. </br>
+For example, say we're conducting a study on a hair growth serum.
+
+**MCAR** would mean that a collection methodology might've broken, say the way we process data means every third person on hair growth serum gets their results deleted.
+
+**MAR** would mean that there were people filling in surveys before the trial, and those who were displeased with the results stopped responding and dropped out of the trial.
+
 **MNAR** would mean that there were people displeased with the results, as the hair serum didn't work, however we have no corroborating evidence to suggest why they dropped out.
 
 Also consider the combinations of these issues. We may have just one type of missing data, but we may have combinations of two, or all three present in our dataset.
@@ -45,15 +48,15 @@ All of our previous techniques beforehand were single imputation techniques that
 ![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MedicalDataImputation/6.png)
 
 Multiple imputation has three steps:
-1. Impute missing values with values randomly drawn from some distributions to generate m complete datasets. </br>
-2. Perform analysis on each m dataset.</br>
+1. Impute missing values with values randomly drawn from some distributions to generate m complete datasets.
+2. Perform analysis on each m dataset.
 3. Pool the m results and calculate the mean, variance and confidence interval of the variable.
 
 This seems nebulous, and you're right! Multiple imputation is implemented in many forms and most bootstrap another process called **multiple imputation by chained equations** (MICE).
 
-1. Impute missing values with values randomly drawn from some distributions to generate m complete datasets.</br>
-2. For each imputed dataset, impute missing values (that were replaced with guesses from out distribution) one variable at a time. Iteratively do this for all values in each dataset. We're using a predictive model of some sort to guess the value that is missing.</br>
-3. Iterate this process of chaining predictions of missing values multiple times until an equilibrium is reached.</br>
+1. Impute missing values with values randomly drawn from some distributions to generate m complete datasets.
+2. For each imputed dataset, impute missing values (that were replaced with guesses from out distribution) one variable at a time. Iteratively do this for all values in each dataset. We're using a predictive model of some sort to guess the value that is missing.
+3. Iterate this process of chaining predictions of missing values multiple times until an equilibrium is reached.
 4. Pool the results using regression, hypothesis testing, etc. Use these pooled results to find the best values to fit into a single, final dataset.
 
 ![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MedicalDataImputation/7.png)
