@@ -108,7 +108,7 @@ In accept reject sampling we have a target function f(x), but have a hard time s
 
 ![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MedicalDataImputation/15.png)
 
- We choose a random point in our distribution, and take a uniform sample from 0 to C in which we can accept the sample or reject the sample, depending on if it is greater or lower than the blue line. Randomly sampling a bunch of times means that our acceptance density is the same as if we were to sample from f(x).
+We choose a random point in our distribution, and take a uniform sample from 0 to C in which we can accept the sample or reject the sample, depending on if it is greater or lower than the blue line. Randomly sampling a bunch of times means that our acceptance density is the same as if we were to sample from f(x).
  
 I had the idea here of combining gaussian mixed models and wavelet transforms, but unfortunately this idea was done. 🙁 Makes me feel good about my intuitions of math though. 🙂
 
@@ -176,8 +176,11 @@ Multivariate Normals: Given a 2D graph with data points, a multivariate normal c
 
 Factor Analysis creates a loading matrix W of length L. x=Wz+μ+ε means our new value x is going to be equal to our latent space gaussian distribution value z we choose, a linear mapping W, plus a bias μ and noise ε.
 
-p(z)=Norm(z|0,I), p(ε)=Norm(ε|0,Ѱ), therefore 
-p(x|z)=Norm(x|Wz+μ,Ѱ) where μ is equal to the sample mean of x.
+$$ p(z)=Norm(z|0,I), p(ε)=Norm(ε|0,Ѱ)$$
+
+$$ p(x|z)=Norm(x|Wz+μ,Ѱ) $$
+
+where μ is equal to the sample mean of x.
 
 Optimizing this can be a pain, which is why PPCA is better.
 
