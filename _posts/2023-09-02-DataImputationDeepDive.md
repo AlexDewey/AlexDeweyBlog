@@ -168,9 +168,10 @@ iMSF: **Incomplete multi-source feature learning** is an ensemble method that co
 
 ![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MedicalDataImputation/24.png)
 
-PPCA: To explain **probabilistic PCA**, we have to make a couple of steps.
+PPCA: To explain **probabilistic PCA**, we have to make a couple of steps:
 
-Multivariate Normals: Given a 2D graph with data points, a multivariate normal can be defined as "p(x)=Norm(x|μ,Σ)" where μ is a 2d mean vector and a covariance matrix Σ which is 2x2. With more and more variables given, the need for more parameters increases exponentially due to the covariance matrix growing too fast. This can also lead to overfitting.
+Multivariate Normals: Given a 2D graph with data points, a multivariate normal can be defined as ```p(x)=Norm(x|μ,Σ)``` where μ is a 2d mean vector and a covariance matrix Σ which is 2x2. With more and more variables given, the need for more parameters increases exponentially due to the covariance matrix growing too fast. This can also lead to overfitting.
+
 
 ![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MedicalDataImputation/25.png)
 
