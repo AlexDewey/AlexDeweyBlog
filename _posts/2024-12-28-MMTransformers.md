@@ -140,9 +140,10 @@ Next the paper discusses the differing ways of utilizing fusions in a transforme
 <ul>
 <li><b>Early summation</b> was discussed previously in which we conduct an element-wise sum embedding with weights alpha and beta. The position embedding is such an embedding.
 
+
 <img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/5.png" alt="Alt Text">
 
-$$Z=\alpha Z_{a}\quad \beta Z_{b}=MHSA(Q_{ab},K_{ab},V_{ab})$$
+$$Z=\alpha Z_{a}\bigoplus \beta Z_{b}=MHSA(Q_{ab},K_{ab},V_{ab})$$
 </li>
 <li><b>Early Concatenation</b> is simply the concatenation of an input. VideoBERT just fuses text and video feeds with early concatenation to encode a global multimodal context feed. Longer sequences do increase computation complexity.
 
