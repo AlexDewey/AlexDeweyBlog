@@ -118,7 +118,7 @@ Transformers have an incredible ability to find patterns, even among varying siz
 
 Where do we start? For people new to the field we tend to start with the latest survey paper of the field, and then expand from there for more recent papers.
 
-## (2023)[Multimodal Learning with Transformers: A Survey](https://arxiv.org/pdf/2206.06488) ##
+### (2023)[Multimodal Learning with Transformers: A Survey](https://arxiv.org/pdf/2206.06488) ###
 
 From basic transformers, we can imagine how images are simply just embeddings of pixels that are augmented by their two-dimensional position encoding.
 **CLIP** is a contrastive learning framework that unifies image and text by utilizing cross attention, where queries and keys are one of the two modalities. After encoding our data, we'll feed in multiple images and multiple text embeddings such that we're matching a text encoding with an image encoding. The contrastive objective is the ability to learn and distinguish proper text and image embeddings. At inference time we can simply feed in one image and list a bunch of possible text outcomes to then determine the outcome.
@@ -172,11 +172,13 @@ x = x + self.sa_3(self.ln1(torch.cat(x_1, x_2)))
 
 <li><b>Cross-Attention</b> was already discussed and is simply the query and key being of different modalities. An interesting point about this method is that each modality A is conditioned on the other modality B, however we do not perform cross-modal attention globally and therefore context is lost.
 
+
 <img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/8.png" alt="Alt Text">
 
 </li>
 
 <li><b>Cross-Attention to Concatenation</b> fixes this by concatenating two cross attentions and processing a final transformer layer.
+
 
 <img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/9.png" alt="Alt Text">
 </li>
@@ -190,7 +192,7 @@ Training understanding and discriminative tasks requires an encoder, while gener
 
 Discovering and adapting latent semantic alignments across modalities is crucial in future tasks.
 
-## (2023)[A transformer-based representation-learning model with unified processing of multimodal input for clinical diagnostics](https://www.google.com/url?q=https://www.nature.com/articles/s41551-023-01045-x&sa=D&source=docs&ust=1735445783153451&usg=AOvVaw0jj5qAPBMjVxJIfxbdxnXg) ##
+### (2023)[A transformer-based representation-learning model with unified processing of multimodal input for clinical diagnostics](https://www.google.com/url?q=https://www.nature.com/articles/s41551-023-01045-x&sa=D&source=docs&ust=1735445783153451&usg=AOvVaw0jj5qAPBMjVxJIfxbdxnXg) ###
 
 A hierarchical model that utilizes intramodal and intermodal attention learns holistic representations of radiographs and text comprising chief complaints, clinical history and structured clinical laboratory or demographic information. This type of model can help streamline triaging of patients and facilitate the clinical decision-making process.
 
@@ -202,7 +204,7 @@ The picture above is a better demonstration of a form of cross-attention used in
 
 The entire structure involves simple embeddings, two bidirectional multimodal attention blocks stacked, ten self-attention blocks and then a final classification head for the diseases analyzed. Lab data is either tokenized or uses linear projections into an acceptable range (sex may be 0 or 1, age is transformed to be between 0 and 1).
 
-## (2023)[Continual Self-Supervised Learning: Towards Universal Multi-modal Medical Representation Learning](https://arxiv.org/abs/2311.17597) ##
+### (2023)[Continual Self-Supervised Learning: Towards Universal Multi-modal Medical Representation Learning](https://arxiv.org/abs/2311.17597) ###
 
 The idea behind this paper is that we want a "universal" multimodal architecture where the transformer doesn't care what modality you feed it. This leads to catastrophic forgetting and the authors emphasize the need for continual samples from various modalities to avoid this. There are dimension-specific tokenizers to also help accomplish this goal. This task seems ill-guided, as I don't know why we'd wish for a universal architecture. Similarly in how our brains work, we have different parts of our brains for different tasks. We can try to get our math compartment to do english, but what's the point?
 
@@ -210,13 +212,13 @@ The idea behind this paper is that we want a "universal" multimodal architecture
 
 We have to maintain an expensive pipeline and keep feeding in previous samples. This truly stretches the capabilities of transformers in a way that isn't ideal for the technology, especially given how other multimodal architectures opt for separate backbones per modality.
 
-## (2023)[Tabular Insights, Visual Impacts: Transferring Expertise from Tables to Images](https://openreview.net/forum?id=v7I5FtL2pV) ##
+### (2023)[Tabular Insights, Visual Impacts: Transferring Expertise from Tables to Images](https://openreview.net/forum?id=v7I5FtL2pV) ###
 
 This paper has two modalities, face images and tabular descriptors. They separately encode both modalities before conducting optimal transport. Afterwards a self-attention layer is used before classifying the desired data. This method's main purpose is to highlight optimal transport theory as a way to better improve mutual information from two modalities. They're trying to align representations into a shared embedding space.
 
 ![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/13.png)
 
-## (2024)[Temporal Cross-Attention For Dynamic Embedding And Tokenization Of Multimodal Electronic Health Records](https://openreview.net/forum?id=v7I5FtL2pV](https://arxiv.org/pdf/2403.04012) ##
+### (2024)[Temporal Cross-Attention For Dynamic Embedding And Tokenization Of Multimodal Electronic Health Records](https://arxiv.org/pdf/2403.04012) ###
 
 Multimodal clinical time series are incredibly challenging and require dynamic embedding and tokenization schemes to enable transformers to adapt. This paper combines structured, numerical time series data and free-text clinical notes through an adoption of cross-attention to create a joint multimodal temporal representation.
 
@@ -240,7 +242,7 @@ Multimodal clinical time series are incredibly challenging and require dynamic e
 
 As for the actual model, we've seen this method before in our survey being a simple early concatenation that ultimately performed best where Q,K,Vs are calculated for each embedding independently, and then a crossmodal transformer embeds the information into a common latent space for classification.
 
-## (2024)[Deep Multimodal Learning with Missing Modality: A Survey](https://arxiv.org/pdf/2409.07825) ##
+### (2024)[Deep Multimodal Learning with Missing Modality: A Survey](https://arxiv.org/pdf/2409.07825) ###
 
 Missingness is either handled at a data level or at an architectural level. Here are two methods described in the paper for handling missingness:
 
