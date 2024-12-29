@@ -172,14 +172,14 @@ x = x + self.sa_3(self.ln1(torch.cat(x_1, x_2)))
 
 <li><b>Cross-Attention</b> was already discussed and is simply the query and key being of different modalities. An interesting point about this method is that each modality A is conditioned on the other modality B, however we do not perform cross-modal attention globally and therefore context is lost.
 
-
+<br>
 <img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/8.png" alt="Alt Text">
 
 </li>
 
 <li><b>Cross-Attention to Concatenation</b> fixes this by concatenating two cross attentions and processing a final transformer layer.
 
-
+<br>
 <img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/9.png" alt="Alt Text">
 </li>
 </ul>
