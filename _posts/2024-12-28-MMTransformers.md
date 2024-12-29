@@ -16,13 +16,10 @@ The original designers of the transformer wanted to process words, and translate
 1. Randomly sample a block of data repeatedly. Each block will be of size T (time). Once we've collected enough samples we'll form a batch of tensors of size (B, T).
 2. Embed each word into a numbered value through an embedding table. The embedding is now (B, T, C). This conversion is a neural network layer that is trainable, and in this case is learning how to best represent words in a higher dimensional space.
 Then we will concatenate said embedding with a position embedding table such that our model will understand how words are in relation to others.
-
-
 ```
 self.token_embedding_table = nn.Embedding(vocab_size, n_embed)
 self.position_embedding_table = nn.Embedding(block_size, n_embed)
 ```
-
 3. Next we pass our data into a series of blocks. Each block consists of the **MultiHeadAttention** mechanism followed by a simple neural network feed forward layer.
 
 ```
