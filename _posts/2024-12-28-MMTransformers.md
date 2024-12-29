@@ -169,18 +169,18 @@ x_2 = self.sa_2(self.ln1(x))
 x = x + self.sa_3(self.ln1(torch.cat(x_1, x_2)))
 ```
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/6.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/7.png)
 </li>
 
 <li><b>Cross-Attention</b> was already discussed and is simply the query and key being of different modalities. An interesting point about this method is that each modality A is conditioned on the other modality B, however we do not perform cross-modal attention globally and therefore context is lost.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/7.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/8.png)
 
 </li>
 
 <li><b>Cross-Attention to Concatenation</b> fixes this by concatenating two cross attentions and processing a final transformer layer.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/8.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/9.png)
 </li>
 </ul>
 
@@ -196,11 +196,11 @@ Discovering and adapting latent semantic alignments across modalities is crucial
 
 A hierarchical model that utilizes intramodal and intermodal attention learns holistic representations of radiographs and text comprising chief complaints, clinical history and structured clinical laboratory or demographic information. This type of model can help streamline triaging of patients and facilitate the clinical decision-making process.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/9.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/10.png)
 
 The picture above is a better demonstration of a form of cross-attention used in a hierarchical setting where another attention block can learn from both embeddings. This is considered a "bidirectional multimodal attention layer", which means that when we train our model, we mask random tokens within and have our model predict based on past and future tokens. This doesn't help in "predicting", but for the case of classification we don't need prediction of the next token, we only need a deep understanding of the data.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/10.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/11.png)
 
 The entire structure involves simple embeddings, two bidirectional multimodal attention blocks stacked, ten self-attention blocks and then a final classification head for the diseases analyzed. Lab data is either tokenized or uses linear projections into an acceptable range (sex may be 0 or 1, age is transformed to be between 0 and 1).
 
@@ -208,7 +208,7 @@ The entire structure involves simple embeddings, two bidirectional multimodal at
 
 The idea behind this paper is that we want a "universal" multimodal architecture where the transformer doesn't care what modality you feed it. This leads to catastrophic forgetting and the authors emphasize the need for continual samples from various modalities to avoid this. There are dimension-specific tokenizers to also help accomplish this goal. This task seems ill-guided, as I don't know why we'd wish for a universal architecture. Similarly in how our brains work, we have different parts of our brains for different tasks. We can try to get our math compartment to do english, but what's the point?
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/11.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/12.png)
 
 We have to maintain an expensive pipeline and keep feeding in previous samples. This truly stretches the capabilities of transformers in a way that isn't ideal for the technology, especially given how other multimodal architectures opt for separate backbones per modality.
 
@@ -216,13 +216,13 @@ We have to maintain an expensive pipeline and keep feeding in previous samples. 
 
 This paper has two modalities, face images and tabular descriptors. They separately encode both modalities before conducting optimal transport. Afterwards a self-attention layer is used before classifying the desired data. This method's main purpose is to highlight optimal transport theory as a way to better improve mutual information from two modalities. They're trying to align representations into a shared embedding space.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/12.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/13.png)
 
 ## (2024)[Temporal Cross-Attention For Dynamic Embedding And Tokenization Of Multimodal Electronic Health Records](https://openreview.net/forum?id=v7I5FtL2pV](https://arxiv.org/pdf/2403.04012) ##
 
 Multimodal clinical time series are incredibly challenging and require dynamic embedding and tokenization schemes to enable transformers to adapt. This paper combines structured, numerical time series data and free-text clinical notes through an adoption of cross-attention to create a joint multimodal temporal representation.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/13.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/14.png)
 
 <ul>
 <li>
@@ -238,7 +238,7 @@ Multimodal clinical time series are incredibly challenging and require dynamic e
 </li>
 </ul>
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/14.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/15.png)
 
 As for the actual model, we've seen this method before in our survey being a simple early concatenation that ultimately performed best where Q,K,Vs are calculated for each embedding independently, and then a crossmodal transformer embeds the information into a common latent space for classification.
 
@@ -246,31 +246,31 @@ As for the actual model, we've seen this method before in our survey being a sim
 
 Missingness is either handled at a data level or at an architectural level. Here are two methods described in the paper for handling missingness:
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/15.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/16.png)
 
 This method just sets any missing modalities to zero.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/16.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/17.png)
 
 This method samples modalities, and if modalities are missing, it will randomly sample from a similar example via KNN (or some other clustering method) to fill in the missing modality before then randomly removing a sample. This is only really useful for classification and may lead to overfitting. With more missingness, this method degrades in performance.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/17.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/18.png)
 
 Generative methods are also used for creating modalities for modality imputation. Autoencoders, GANs and Diffusion Models are generally used to construct embeddings. This in my mind is problematic, as best imputation practices are done with simpler tree models, however given the quantity and dimensionality of the data, these ML methods may prove to be better. The paper argues that GANs have been shown to perform better and link to a study, however the study they reference only compare basic implementations of AEs and VAEs to a much more complex implementation of a GAN they call SMIL. Even then the difference in performance was 94% accuracy to 96% accuracy for a MUCH more complicated model.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/18.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/19.png)
 
 This structure focuses on creating a joint representation through encoding and concatenating modality tokens. This model requires a large amount of data and computing resources to pull off.
 
 Distillation methods seem the most promising on the outset. They try to focus on reconstruction of missing modalities through trying to get a teacher and student model to agree on how to represent missing data in a joint embedding space.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/19.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/20.png)
 
 Here we have a teacher helping the student reconstruct a missing modality in the response distillation. However we can also see an intermediate distillation, in which the weights of the models are compared and adjusted to help the student DNN.
 
 From this paper I keep seeing the same idea, basically CLIP where we encode various modalities into the same featurespace, and it makes intuitive sense to me that this approach is best. However this method may create some oversimplifications towards not being able to address small nuances in modality cases. In my field of health, small nuances may be important, and unless there are a substantial number of samples for each small nuance, we have to rely on a model's ability to generalize tasks for understanding and giving proper diagnosis.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/20.png)
+![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransform/21.png)
 
 Discrete Scheduler Methods are super interesting in which an LLM takes control over which steps are conducted and analyzed. We can give the LLM abilities to engage with multimodal tools to analyze chest X-rays or separate modality models to come to decisions based on the data. This is the closest and probably most realistic way a robo-doctor could be implemented and trusted. It gives me a lot of ideas!
 
