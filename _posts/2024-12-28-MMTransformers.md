@@ -1,6 +1,6 @@
 ---
 title: "How Multimodal Transformers Work For A Medical Usecase"
-date: 2024-06-31
+date: 2024-12-28
 ---
 
 ## **Transformers From The Bottom Up** ##
