@@ -140,7 +140,7 @@ Next the paper discusses the differing ways of utilizing fusions in a transforme
 <ul>
 <li><b>Early summation</b> was discussed previously in which we conduct an element-wise sum embedding with weights alpha and beta. The position embedding is such an embedding.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/5.png)
+<img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/5.png" alt="Alt Text">
 
 $$Z=\alpha Z_{a}\quad \beta Z_{b}=MHSA(Q_{ab},K_{ab},V_{ab})$$
 </li>
@@ -148,7 +148,7 @@ $$Z=\alpha Z_{a}\quad \beta Z_{b}=MHSA(Q_{ab},K_{ab},V_{ab})$$
 
 $$Z=Tf(C(Z_{a},Z_{b}))$$
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/6.png)
+<img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/6.png" alt="Alt Text">
 </li>
 <li>
 <b>Hierarchical Attention</b> has us encode with independent transformer streams and then concatenate outputs.
@@ -166,18 +166,18 @@ x_2 = self.sa_2(self.ln1(x))
 x = x + self.sa_3(self.ln1(torch.cat(x_1, x_2)))
 </pre>
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/7.png)
+<img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/7.png" alt="Alt Text">
 </li>
 
 <li><b>Cross-Attention</b> was already discussed and is simply the query and key being of different modalities. An interesting point about this method is that each modality A is conditioned on the other modality B, however we do not perform cross-modal attention globally and therefore context is lost.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/8.png)
+<img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/8.png" alt="Alt Text">
 
 </li>
 
 <li><b>Cross-Attention to Concatenation</b> fixes this by concatenating two cross attentions and processing a final transformer layer.
 
-![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/9.png)
+<img src="https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/9.png" alt="Alt Text">
 </li>
 </ul>
 
