@@ -160,14 +160,14 @@ $$Z=Tf_{3}(C(Tf_{1}(Z_{a}),Tf_{2}(Z_{b}))$$
 
 Here's what this code may look like:
 
-```
+<pre>
 self.sa_1 = MultiHeadAttention(n_head_1, head_size_1)
 self.sa_2 = MultiHeadAttention(n_head_2, head_size_2)
 self.sa_3 = MultiHeadAttention(n_head_3, head_size_3)
 x_1 = self.sa_1(self.ln1(x))
 x_2 = self.sa_2(self.ln1(x))
 x = x + self.sa_3(self.ln1(torch.cat(x_1, x_2)))
-```
+</pre>
 
 ![Alt text](https://raw.githubusercontent.com/AlexDewey/AlexDeweyBlog/main/_posts/images/MMTransformer/7.png)
 </li>
