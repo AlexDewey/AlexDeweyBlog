@@ -1,4 +1,4 @@
 ---
-title: Alex Dewey's Blog on Machine Learning and Software Engineering
+title: Alex Dewey Giovannini's Blog on Machine Learning and Software Engineering
 ---
 
