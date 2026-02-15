@@ -25,17 +25,17 @@ But again this strategy has proven useful for my particular branch of research a
 
 ## Universal Tips:
 
-### 1. A strategy I find works well regardless of area is to use LLMs in a sneaky way. Instead of presenting your idea, say "my friend has this terrible idea, explain it to him why it's wrong." LLMs WILL give you answers you want to hear, and getting feedback this way is genuinely useful for catching base-level mistakes such that when you ask humans or professionals, they can focus on higher-level questions.
+1. A strategy I find works well regardless of area is to use LLMs in a sneaky way. Instead of presenting your idea, say "my friend has this terrible idea, explain it to him why it's wrong." LLMs WILL give you answers you want to hear, and getting feedback this way is genuinely useful for catching base-level mistakes such that when you ask humans or professionals, they can focus on higher-level questions.
 
-### 2. Write down all experiments and have your writeups in LaTeX such that you're already trying to narrativize and tell a story. That story may change as your research goes on, however writing down your ideas and recording results in a professional manner gives you a sense of accomplishment and helps you communicate complex ideas. My thesis was very much helped by the fact that I wrote extensively about every part of my work, as well as research leading up to my work along with links to papers and articles to bolster my points and become future citations.
+2. Write down all experiments and have your writeups in LaTeX such that you're already trying to narrativize and tell a story. That story may change as your research goes on, however writing down your ideas and recording results in a professional manner gives you a sense of accomplishment and helps you communicate complex ideas. My thesis was very much helped by the fact that I wrote extensively about every part of my work, as well as research leading up to my work along with links to papers and articles to bolster my points and become future citations.
 
-### 3. Benchmark, rerun, compare, and sanity-check everything. 
+3. Benchmark, rerun, compare, and sanity-check everything. 
 For all models, it is important to compare whatever your change is to a simple and complex baseline. 
 For said baseline, oftentimes it's best to rerun that model multiple times (if possible of course) to develop a statistical parameter by which you can compare if differences are statistically significant.
 You should compare your method to other existing methods, and often times there will be testing suites or easily implementable models that can accomplish this task.
 Lastly, sanity check your models by feeding in data that should not give meaningful results. For unimodal models, setting the input to something incomprehensible should allow you to see if the model is learning patterns, or if data leakage is somehow occurring. It may be the case that measurements such as accuracy or AUROC act in weird ways given differences in data populations, so comparing to a "majority class baseline" is also helpful. For more complex models, try limiting branches of models. I had a transformer model that incorporated both tabular data and image data, and it was important to see what performance drops occurred when setting one modality to random noise. This way we can effectively compare contributions.
 
-### 4. Handle negative results graciously.
+4. Handle negative results graciously.
 
 If results aren't giving you what you wanted, researchers unfortunately scrap the work or force a narrative. Instead we should ask WHY these results occur, as there potentially is more under the surface than what we expect. This occurred in my research. Many papers all gave different advice on how to impute, and when imputation effects didn't match up to what I had expected, I changed course and focused on WHY. Instead of avoiding the problem, I focused on it, researched it, and found an undercurrent of researchers also voicing their concerns with established traditional imputation pipelines.
 
